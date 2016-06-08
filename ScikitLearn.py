@@ -78,6 +78,7 @@ plot_decision_regions(X=X_combined_std, y=y_combined,
 plt.xlabel('petal length [standardized]')
 plt.ylabel('petal width [standardized]')
 plt.legend(loc='upper left')
+plt.suptitle('Perceptron')
 
 # plt.tight_layout()
 # plt.savefig('./figures/iris_perceptron_scikit.png', dpi=300)

@@ -20,9 +20,11 @@ plt.scatter(x_xor[y_xor == -1, 0],
 plt.xlim([-3, 3])
 plt.ylim([-3, 3])
 
-svm = SVC(kernel='rbf', random_state=0, gamma=0.10, C=10.0)
+svm = SVC(kernel='rbf', random_state=0, gamma=0.10, C=1000.0)  # Plus gamma augmente plus on a risque d'overfitting
 svm.fit(x_xor, y_xor)
 from ScikitLearn import plot_decision_regions
+
+plt.suptitle('Kernel')
 
 plot_decision_regions(x_xor, y_xor, classifier=svm)
 plt.legend(loc='upper left')
