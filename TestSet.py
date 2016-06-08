@@ -5,6 +5,7 @@ from sklearn.cross_validation import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
+#############################################################################
 # Données sur le vin
 df_wine = pd.read_csv('https://archive.ics.uci.edu/'
                       'ml/machine-learning-databases/wine/wine.data',
@@ -17,6 +18,8 @@ df_wine.columns = ['Class label', 'Alcohol', 'Malic acid', 'Ash',
 
 X, y = df_wine.iloc[:, 1:].values, df_wine.iloc[:, 0].values  # iloc comme [][] pour des DataFrames
 
+#############################################################################
+
 # Splitter les données
 X_train, X_test, y_train, y_test = \
     train_test_split(X, y, test_size=0.3, random_state=0)
@@ -24,12 +27,15 @@ X_train, X_test, y_train, y_test = \
 # random_state : si l'on fixe ce parametre, on est sur d'avoir toujours les mêmes samples, sinon ils sont séparés
 # aléatoirement
 
+
+#############################################################################
 # Normalisation des données
 
 mms = MinMaxScaler()
 X_train_norm = mms.fit_transform(X_train)
 X_test_norm = mms.transform(X_test)
 
+#############################################################################
 # Standardisation des données (MEILLEUR)
 stdsc = StandardScaler()
 X_train_std = stdsc.fit_transform(X_train)
@@ -37,7 +43,8 @@ X_test_std = stdsc.transform(X_test)
 
 feat_labels = df_wine.columns[1:]  # Recupère les colonnes sauf la première
 
-
+#############################################################################
+# Selection des features les plus importantes en utilisant un RandomForestClasifier
 forest = RandomForestClassifier(n_estimators=10000,
                                 random_state=0,
                                 n_jobs=-1)
