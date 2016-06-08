@@ -68,3 +68,4 @@ print(X)
 # ou encore plus simple ..
 ProperData = pd.get_dummies(df[['price', 'color', 'size']])
 print(ProperData)
+
