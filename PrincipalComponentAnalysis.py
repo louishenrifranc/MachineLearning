@@ -44,15 +44,19 @@ X_train_nbase = X_train_std.dot(W)
 ############################################################################
 # On peut aussi utiliser la librairie Skicitlearn
 
-pca = PCA(n_components=2)
-lr = LogisticRegression()
+# Permet d'afficher la variance de chaque feature (et donc son importance)
+pca = PCA()
 X_train_pca = pca.fit_transform(X_train_std)
-
-plt.bar(range(1, 13), pca.explained_variance_ratio_, alpha=0.5, align='center')
-plt.step(range(1, 13), np.cumsum(pca.explained_variance_ratio_), where='mid')
+plt.bar(range(1, 14), pca.explained_variance_ratio_, alpha=0.5, align='center')
+plt.step(range(1, 14), np.cumsum(pca.explained_variance_ratio_), where='mid')
 plt.ylabel('Explained variance ratio')
 plt.xlabel('Principal components')
 plt.show()
+
+# On choisit de n'en séléctionner que deux
+pca = PCA(n_components=2)
+lr = LogisticRegression()
+
 
 X_test_pca = pca.transform(X_test_std)
 lr.fit(X_train_pca, y_train)
