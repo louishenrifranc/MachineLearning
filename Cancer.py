@@ -30,8 +30,12 @@ plt.bar(range(1, X_train.shape[1] + 1), pca.explained_variance_ratio_, alpha=0.5
 plt.step(range(1, X_train.shape[1] + 1), np.cumsum(pca.explained_variance_ratio_), where='mid')
 plt.ylabel('Explained variance ratio')
 plt.xlabel('Principal components')
-plt.show()
+# plt.show()
 
 pipe_lr = Pipeline([('scl', StandardScaler()),
-                    ('pca', PCA(n_components=2)),
+                    ('pca', PCA(n_components=6)),
                     ('clf', LogisticRegression(random_state=1))])
+
+pipe_lr.fit(X_train, y_train)
+print('Test Accuracy: %.3f' % pipe_lr.score(X_test, y_test))
+y_pred = pipe_lr.predict(X_test)
