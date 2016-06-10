@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.cross_validation import cross_val_score
 from sklearn.cross_validation import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
@@ -27,53 +28,42 @@ pipe_lr = Pipeline([('scl', StandardScaler()),
 
 # Methode des K fold cross
 # Permet de tester notre modèle sur un nombre limité de données, en splittant notre ensemble de données de départ
-# en
-from sklearn.cross_validation import cross_val_score
-
+# en 'cv' fold différents et en utilisant comme donnée de validation, chacu fold a tour de role... donc cv fois
+# Implementer dans sklearn
 scores = cross_val_score(estimator=pipe_lr, y=y_train, X=X_train, cv=10, n_jobs=1)
 print(np.mean(scores), '+-', np.std(scores))
 
-
-
-#
-## Plotter la training accuracy et la validation accuracy
-# train_sizes, train_scores, test_scores = learning_curve(estimator=pipe_lr,
-#                                                        X=X_train,
-#                                                        y=y_train,
-#                                                        train_sizes=np.linspace(0.1, 1.0, 10),
-#                                                        cv=10,
-#                                                        n_jobs=1)
-#
-# train_mean = np.mean(train_scores, axis=1)
-# train_std = np.std(train_scores, axis=1)
-# test_mean = np.mean(test_scores, axis=1)
-# test_std = np.std(test_scores, axis=1)
-#
-# plt.plot(train_sizes, train_mean,
-#         color='blue', marker='o',
-#         markersize=5, label='training accuracy')
-#
-# plt.fill_between(train_sizes,
-#                 train_mean + train_std,
-#                 train_mean - train_std,
-#                 alpha=0.15, color='blue')
-#
-# plt.plot(train_sizes, test_mean,
-#         color='green', linestyle='--',
-#         marker='s', markersize=5,
-#         label='validation accuracy')
-#
-# plt.fill_between(train_sizes,
-#                 test_mean + test_std,
-#                 test_mean - test_std,
-#                 alpha=0.15, color='green')
-#
-# plt.grid()
-# plt.xlabel('Number of training samples')
-# plt.ylabel('Accuracy')
-# plt.legend(loc='lower right')
-# plt.ylim([0.8, 1.0])
-## plt.tight_layout()
-## plt.savefig('./figures/learning_curve.png', dpi=300)
-# plt.show()
-#
+# Plotter la training accuracy et la validation accuracy
+train_sizes, train_scores, test_scores = learning_curve(estimator=pipe_lr,
+                                                        X=X_train,
+                                                        y=y_train,
+                                                        train_sizes=np.linspace(0.1, 1.0, 10),
+                                                        cv=10,
+                                                        n_jobs=1)
+train_mean = np.mean(train_scores, axis=1)
+train_std = np.std(train_scores, axis=1)
+test_mean = np.mean(test_scores, axis=1)
+test_std = np.std(test_scores, axis=1)
+plt.plot(train_sizes, train_mean,
+         color='blue', marker='o',
+         markersize=5, label='training accuracy')
+plt.fill_between(train_sizes,
+                 train_mean + train_std,
+                 train_mean - train_std,
+                 alpha=0.15, color='blue')
+plt.plot(train_sizes, test_mean,
+         color='green', linestyle='--',
+         marker='s', markersize=5,
+         label='validation accuracy')
+plt.fill_between(train_sizes,
+                 test_mean + test_std,
+                 test_mean - test_std,
+                 alpha=0.15, color='green')
+plt.grid()
+plt.xlabel('Number of training samples')
+plt.ylabel('Accuracy')
+plt.legend(loc='lower right')
+plt.ylim([0.8, 1.0])
+plt.tight_layout()
+plt.savefig('./figures/learning_curve.png', dpi=300)
+plt.show()
