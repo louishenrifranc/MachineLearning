@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.cross_validation import train_test_split
@@ -41,11 +42,18 @@ W = np.hstack((paire_propre[0][1][:, np.newaxis], paire_propre[1][1][:, np.newax
 X_train_nbase = X_train_std.dot(W)
 
 ############################################################################
-# On peut utiliser la librairie Skicitlearn
+# On peut aussi utiliser la librairie Skicitlearn
 
 pca = PCA(n_components=2)
 lr = LogisticRegression()
 X_train_pca = pca.fit_transform(X_train_std)
+
+plt.bar(range(1, 13), pca.explained_variance_ratio_, alpha=0.5, align='center')
+plt.step(range(1, 13), np.cumsum(pca.explained_variance_ratio_), where='mid')
+plt.ylabel('Explained variance ratio')
+plt.xlabel('Principal components')
+plt.show()
+
 X_test_pca = pca.transform(X_test_std)
 lr.fit(X_train_pca, y_train)
 y_pred = lr.predict(X_test_pca)
