@@ -19,14 +19,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random
 
 # Possibilité de pipeliner plusieurs opérations sur les données dans
 # une pipeline, 'scl', 'pca' sont
-pipe_lr = Pipeline([('scl', StandardScaler()),
-                    ('pca', PCA(n_components=3)),
-                    ('clf', LogisticRegression(random_state=1))])
-pipe_lr.fit(X_train, y_train)
-print("Resultat du test ", pipe_lr.score(X_test, y_test))
+sc = StandardScaler()
+X_train_std = sc.fit_transform(X_train)
+X_test_std = sc.fit_transform(X_test)
 
-plt.bar(range(1, 14), pca.explained_variance_ratio_, alpha=0.5, align='center')
-plt.step(range(1, 14), np.cumsum(pca.explained_variance_ratio_), where='mid')
+# Tout d'abord je regarde le nombre de features importantes
+pca = PCA()
+x_train_pca = pca.fit_transform(X_train_std)
+plt.bar(range(1, X_train.shape[1] + 1), pca.explained_variance_ratio_, alpha=0.5, align='center')
+plt.step(range(1, X_train.shape[1] + 1), np.cumsum(pca.explained_variance_ratio_), where='mid')
 plt.ylabel('Explained variance ratio')
 plt.xlabel('Principal components')
 plt.show()
+
+pipe_lr = Pipeline([('scl', StandardScaler()),
+                    ('pca', PCA(n_components=2)),
+                    ('clf', LogisticRegression(random_state=1))])
