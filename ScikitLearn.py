@@ -9,7 +9,11 @@ y = iris.target
 # Splitted dataset
 from sklearn.cross_validation import train_test_split
 
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+# random_state : si l'on fixe ce parametre, on est sur d'avoir toujours les mêmes samples, sinon ils sont séparés
+# aléatoirement
+
 
 # Preprocessing dataset (centre, reduite)
 from sklearn.preprocessing import StandardScaler
@@ -71,6 +75,7 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
 
 
 
+# Recombiner les vecteur ensembles
 X_combined_std = np.vstack((X_train_std, X_test_std))
 y_combined = np.hstack((y_train, y_test))
 

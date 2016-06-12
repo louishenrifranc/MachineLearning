@@ -65,7 +65,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 knn = KNeighborsClassifier(n_neighbors=2)
 sbs = SBS(knn, k_features=1)
-from TestSet import X_train_std, y_train
+from ModifyData.TestSet import X_train_std, y_train
 
 sbs.fit(X_train_std, y_train)
 
