@@ -39,8 +39,10 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
                     s=55, label='test set')
 
 
+# Generation d'un nombre de points aléatoires, ces points ne peuvent pas être séparé linéairement
 np.random.seed(0)
 x_xor = np.random.randn(200, 2)
+
 
 y_xor = np.logical_xor(x_xor[:, 0] > 0, x_xor[:, 1] > 0)
 y_xor = np.where(y_xor, 1, -1)
@@ -56,12 +58,16 @@ plt.scatter(x_xor[y_xor == -1, 0],
             label='-1')
 plt.xlim([-3, 3])
 plt.ylim([-3, 3])
+# plt.show()
+
+# On utilise donc un Kernel trick pour projeter nos données dans un hyperplan de dimension supérieur, ou il sera possible
+# de séparer des données qui ne l'etait pas initialement
+# Pour cela on utilise le Gaussien Kernel (rbf)
 
 svm = SVC(kernel='rbf', random_state=0, gamma=0.10, C=1000.0)  # Plus gamma augmente plus on a risque d'overfitting
 svm.fit(x_xor, y_xor)
 
 plt.suptitle('Kernel')
-
 plot_decision_regions(x_xor, y_xor, classifier=svm)
 plt.legend(loc='upper left')
 plt.show()
