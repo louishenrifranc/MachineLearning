@@ -21,6 +21,6 @@ def tokenizer(text):
     tokenized = [w for w in text.split() if w not in stop]
     return tokenized
 
-
-res = tokenizer("</a>This :) is :( a test :-)!")
-print(res)
+# Test sur la fonction de tokenizing
+# res = tokenizer("</a>This :) is :( a test :-)!")
+# print(res)
