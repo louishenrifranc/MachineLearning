@@ -1,6 +1,6 @@
 # Resume de chaque fichier
 
-* __BatchGradient__ : Implementation d'un Adaptative Linear Neutron : c'est à dire plusieurs inputs, qui sont coefficienté pour donner un seul output. Puis passage dans la fonction sigmoid pour passer d'une valeur réelle à une valeur continue. Puis si valeur > 0, alors le label 1, sinon 0. Pour mettre a jour les poids, on utilise la méthode du gradient conjugué. Pour chaque modification d'un poids (un w_j), on est obligé d'itérer sur tous les samples fournies dans les données initiales, ce qui est couteux... Une autre méthode consistant à mettre a jour les poids juste avec un sample, en itérant sample après sample.... (mini batch je crois)
+* __BatchGradient__ : Implementation d'un Adaptative Linear Neutron : c'est à dire plusieurs inputs, qui sont coefficienté pour donner un seul output. Puis passage dans la fonction sigmoid pour passer d'une valeur réelle à une valeur continue. Puis si valeur > 0, alors le label 1, sinon 0. Pour mettre a jour les poids, on utilise la méthode du gradient conjugué. Pour chaque modification d'un poids (un w_j), on est obligé d'itérer sur tous les samples fournies dans les données initiales, ce qui est couteux... Une autre méthode consistant à mettre a jour les poids juste avec un sample, en itérant samples après samples.... (Stocastich Descent Gradient)
 Dans ce programme on affiche aussi le cout a chaque itération, suivant le prametre n dans la formule du cout. On voit aussi la nécéssité de standardiser nos vecteurs
 
 # Prise en main de scikit
