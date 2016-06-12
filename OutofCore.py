@@ -1,34 +1,25 @@
-import pyprind
-import pandas as pd
-import os
 import numpy as np
-import re
-import nltk
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.grid_search import GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.feature_extraction.text import TfidfVectorizer
+import pyprind
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.linear_model import SGDClassifier
-from nltk.stem.porter import PorterStemmer
-from nltk.corpus import stopwords
+
+from Tokenizing import tokenizer
 
 
 # Ouvre une review une a la fois
 def stream_docs(path):
-    with open(path, 'r', encoding='utf-8') as csv:
+    with open(path, 'r', encoding='ISO-8859-1') as csv:
         next(csv)  # skip header
         for line in csv:
             text, label = line[:-3], int(line[-2])
             yield text, label
 
 
-print(next(stream_docs(path='./movie_data.csv')))
+# Test  de la fonction de stream de documents
+# print(next(stream_docs(path='./movie_data.csv')))
 
 
-# Fonction qui recupere 'size' reviews,
+# Fonction qui recupere 'size' reviews, par la fonction stream_doc passé en paramètre
 def get_minibatch(doc_stream, size):
     docs, y = [], []
     try:
@@ -39,3 +30,33 @@ def get_minibatch(doc_stream, size):
     except StopIteration:
         return None, None
     return docs, y
+
+
+vect = HashingVectorizer(decode_error='ignore',
+                         n_features=2 ** 21,
+                         preprocessor=None,
+                         tokenizer=tokenizer)
+
+clf = SGDClassifier(loss='log', random_state=1, n_iter=1)
+doc_stream = stream_docs(path='./movie_data.csv')
+
+pbar = pyprind.ProgBar(50000)
+classes = np.array([0, 1])
+for _ in range(40):
+    X_train, y_train = get_minibatch(doc_stream, size=1000)
+    if not X_train:
+        break
+    X_train = vect.transform(X_train)
+    clf.partial_fit(X_train, y_train, classes=classes)
+pbar.update()
+
+X_val, y_val = get_minibatch(doc_stream, size=5000)
+X_val = vect.transform(X_val)
+print('Accuracy: %.3f' % clf.score(X_val, y_val))
+# Ameliorer l'apprentissage
+clf = clf.partial_fit(X_val, y_val)
+
+X_test, y_test = get_minibatch(doc_stream, size=5000)
+X_test = vect.transform(X_test)
+print('Accuracy: %.3f' % clf.score(X_test, y_test))
+clf = clf.partial_fit(X_test, y_test)

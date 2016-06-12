@@ -1,15 +1,12 @@
 import re
 
-import nltk
 from nltk.corpus import stopwords
 
 
 # Permet de tokenizer un text
 def tokenizer(text):
     # Les stopword les plus courants en anglais (is, and,...)
-    nltk.download('stopwords')
     stop = stopwords.words('english')
-
     # Supprime les indentations HTML
     text = re.sub('<[^>]*>', '', text)
     # Enregistre toutes les émoticones
