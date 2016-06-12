@@ -52,7 +52,6 @@ for _ in range(8):
 pbar.update()
 
 X_val, y_val = get_minibatch(doc_stream, size=5000)
-print(y_val[0])
 X_val = vect.transform(X_val)
 print('Accuracy: %.3f' % clf.score(X_val, y_val))
 # Ameliorer l'apprentissage

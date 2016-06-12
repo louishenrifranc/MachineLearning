@@ -62,3 +62,6 @@ X_test_pca = pca.transform(X_test_std)
 lr.fit(X_train_pca, y_train)
 y_pred = lr.predict(X_test_pca)
 print('Nombre d\'erreur pour la logistic Regression %d' % (y_pred != y_test).sum())
+
+# Rappel que j'avais déja oublié, on ne peut savoir quelles sont les principales composantes puisqu'on a completement changé de dimensions
+# PCA doesn't eliminate dimensions and keeps others from the original data. It transforms your data in a number of dimensions whose data are completely different from the original ones
