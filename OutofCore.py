@@ -1,5 +1,6 @@
 import numpy as np
 import pyprind
+from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.linear_model import SGDClassifier
 
@@ -51,6 +52,7 @@ for _ in range(8):
 pbar.update()
 
 X_val, y_val = get_minibatch(doc_stream, size=5000)
+print(y_val[0])
 X_val = vect.transform(X_val)
 print('Accuracy: %.3f' % clf.score(X_val, y_val))
 # Ameliorer l'apprentissage
@@ -61,9 +63,26 @@ X_test = vect.transform(X_test)
 print('Accuracy: %.3f' % clf.score(X_test, y_test))
 clf = clf.partial_fit(X_test, y_test)
 
-x = "stupid movies, will not recomend"
-y = "i like to be there"
-x1 = vect.transform(x)
-y1 = vect.transform(y)
-print(x, " ", clf.predict(x1))
-print(y, " ", clf.predict(y1))
+# Serializing
+import pickle, os
+
+# 1. On cree un nouveau répertoire pour sauvegarder nos données
+dest = os.path.join('movieclassifier', 'pkl_objects')
+if not os.path.exists(dest):
+    os.makedirs(dest)
+
+# On sérialise notre classifier ainsi que nos stop words
+stop = stopwords.words('english')
+
+pickle.dump(stop,
+            open(os.path.join(dest, 'stopwords.pkl'), 'wb'),
+            protocol=4)
+pickle.dump(clf,
+            open(os.path.join(dest, 'classifier.pkl'), 'wb'),
+            protocol=4)
+
+# Predicting
+x = "This is a stupid movies,I will not recomend it"
+label = {0: 'negative', 1: "positive"}
+X = vect.transform(x)
+print('Prediction %s\nProbability : %.2f%%' % (label[clf.predict(X)[0]], np.max(clf.predict_log_proba(X) * 100)))
