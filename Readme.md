@@ -30,6 +30,6 @@ Les données n'ont pas besoin d'etre standardiser.
 
 * __LinearDiscriminantAnalysis__ : Faire ressortir les données les plus features les plus "discriminantes", c'est a dire celle qui apporte le plus d'informations concernant la le label.
 
-* __PrincipalComponentAnalysis__ : Projection des données dans un nouvel espace de dimension plus petite. Implementer a la main, puis en utilisant la bibliotheque scikit.
+* __PrincipalComponentAnalysis__ : Projection des données dans un nouvel espace de dimension plus petite. Implementer a la main (matrice de covariance, puis recherche des valeurs propres), puis en utilisant la bibliotheque scikit.
 A noter que comme on change de dimension, il n'est pas possible de retrouver quelles étaient les features les plus importantes.
 
