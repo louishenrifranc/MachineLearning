@@ -73,6 +73,7 @@ sbs.fit(X_train_std, y_train)
 k_feat = [len(k) for k in sbs.subsets_]
 import matplotlib.pyplot as plt
 
+
 plt.plot(k_feat, sbs.scores_, marker='o')
 plt.ylim([0.7, 1.1])
 plt.ylabel('Accuracy')
@@ -81,13 +82,12 @@ plt.grid()
 plt.show()
 
 k5 = list(sbs.subsets_[8])
-# print('Selected top 5 features:\n', df_wine.columns[1:][k5])
 
+# print('Selected top 5 features:\n', df_wine.columns[1:][k5])
 # knn.fit(X_train_std, y_train)
 # print('\nPerformance using all features:\n')
 # print('Training accuracy:', knn.score(X_train_std, y_train))
 # print('Test accuracy:', knn.score(X_test_std, y_test))
-#
 # knn.fit(X_train_std[:, k5], y_train)
 # print('\nPerformance using the top 5 features:\n')
 # print('Training accuracy:', knn.score(X_train_std[:, k5], y_train))

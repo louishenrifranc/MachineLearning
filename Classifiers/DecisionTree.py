@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
 
-from SVM import X_train_std, plot_decision_regions, y_train, X_combined_std, y_combined
+from Classifiers.SVM import X_train_std, plot_decision_regions, y_train, X_combined_std, y_combined
 
 tree = DecisionTreeClassifier(criterion='entropy', max_depth=3, random_state=0)
 
