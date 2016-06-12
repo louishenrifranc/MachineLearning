@@ -14,17 +14,23 @@ df.columns = ['CRIM', 'ZN', 'INDUS', 'CHAS',
               'NOX', 'RM', 'AGE', 'DIS', 'RAD',
               'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
 
-# On cherche a modéliser pl
+# On cherche a modéliser plusieurs courbes de plusieurs degré différents
+# Pour savoir laquelle s'adapte le mieux à notre modèle
 X = df[['LSTAT']].values
 y = df['MEDV'].values
+
 regr = LinearRegression()
-# create quadratic features
+
+# Implémenté dans la bibliothéque
+
+# Génère une nouvelle matrice contenant toutes les combinaisons de features de degré inférieure ou égale à 2
 quadratic = PolynomialFeatures(degree=2)
+
 cubic = PolynomialFeatures(degree=3)
 X_quad = quadratic.fit_transform(X)
 X_cubic = cubic.fit_transform(X)
 
-# fit features
+# Fit les différentes régréssions
 X_fit = np.arange(X.min(), X.max(), 1)[:, np.newaxis]
 regr = regr.fit(X, y)
 y_lin_fit = regr.predict(X_fit)
@@ -58,35 +64,3 @@ plt.xlabel('% lower status of the population [LSTAT]')
 plt.ylabel('Price in $1000\'s [MEDV]')
 plt.legend(loc='upper right')
 plt.show()
-
-#
-#
-#
-# print('Transforming the dataset')
-# X = df[['LSTAT']].values
-# y = df['MEDV'].values
-#
-## transform features
-# X_log = np.log(X)
-# y_sqrt = np.sqrt(y)
-#
-## fit features
-# X_fit = np.arange(X_log.min()-1, X_log.max()+1, 1)[:, np.newaxis]
-#
-# regr = regr.fit(X_log, y_sqrt)
-# y_lin_fit = regr.predict(X_fit)
-# linear_r2 = r2_score(y_sqrt, regr.predict(X_log))
-#
-## plot results
-# plt.scatter(X_log, y_sqrt, label='training points', color='lightgray')
-#
-# plt.plot(X_fit, y_lin_fit,
-#         label='linear (d=1), $R^2=%.2f$' % linear_r2,
-#         color='blue',
-#         lw=2)
-#
-# plt.xlabel('log(% lower status of the population [LSTAT])')
-# plt.ylabel('$\sqrt{Price \; in \; \$1000\'s [MEDV]}$')
-# plt.legend(loc='lower left')
-#
-# plt.show()
