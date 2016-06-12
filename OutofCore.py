@@ -42,8 +42,8 @@ doc_stream = stream_docs(path='./movie_data.csv')
 
 pbar = pyprind.ProgBar(50000)
 classes = np.array([0, 1])
-for _ in range(40):
-    X_train, y_train = get_minibatch(doc_stream, size=1000)
+for _ in range(8):
+    X_train, y_train = get_minibatch(doc_stream, size=5000)
     if not X_train:
         break
     X_train = vect.transform(X_train)
@@ -60,3 +60,10 @@ X_test, y_test = get_minibatch(doc_stream, size=5000)
 X_test = vect.transform(X_test)
 print('Accuracy: %.3f' % clf.score(X_test, y_test))
 clf = clf.partial_fit(X_test, y_test)
+
+x = "stupid movies, will not recomend"
+y = "i like to be there"
+x1 = vect.transform(x)
+y1 = vect.transform(y)
+print(x, " ", clf.predict(x1))
+print(y, " ", clf.predict(y1))
