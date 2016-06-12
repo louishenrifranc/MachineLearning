@@ -33,3 +33,4 @@ plt.step(range(1, X_train.shape[1] + 1), np.cumsum(pca.explained_variance_ratio_
 plt.ylabel('Explained variance ratio')
 plt.xlabel('Principal components')
 plt.show()
+

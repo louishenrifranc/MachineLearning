@@ -16,8 +16,15 @@ class AdalineGD(object):
         for i in range(self.n_iter):
             output = self.net_input(X)
             errors = (y - output)
+            #################################################
+            # i : sample i
+            # j : featur j
+            # x_i^j
+            # Formula to update weight : n * \sum(i) {y^i - y_output^i)*x_j^i = w_j
+            #################################################
             self.w_[1:] += self.eta * X.T.dot(errors)
             self.w_[0] += self.eta * errors.sum()
+            # Cout que l'on cherche a minimiser --> on le calcule pour pouvoir l'afficher après
             cost = (errors ** 2).sum() / 2.0
             self.cost_.append(cost)
         return self
