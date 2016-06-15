@@ -16,12 +16,17 @@ X = np.array([
     ...
 ])
 ```
-__Probleme de cette représentation__: Matrice sparse + place en mémoire + Couteux de rajouter des mots +
+__Probleme de cette représentation__: Matrice sparse + place en mémoire + Couteux de rajouter des mots
 
-  __Solution__ : Decomposition d'une matrice en valeurs singulières
-      * Soit M une matrice m×n dont les coefficients appartiennent au corps K, où K = ℝ ou K = ℂ. Alors il existe une factorisation de la forme :
-  ~Equation
-  M = U Σ V ∗ {\displaystyle M=U\Sigma V^{*}\,\!} M=U\Sigma V^{*}\,\!,
-  ~
-  avec U une matrice unitaire m×m sur K, $\Sigma$ une matrice m×n dont les coefficients diagonaux sont des réels positifs ou nuls et tous les autres sont nuls, et $V^{*}$ est la matrice adjointe à V, matrice unitaire n×n sur K. On appelle cette factorisation la décomposition en valeurs singulières de M.
+__Solution__ : 
+ 
+~~ Framed
+~ Theorem {caption:"Décomposition d'une matrice en valeurs singulières"}
+____ \
+Soit M une matrice m×n dont les coefficients appartiennent au corps K, où K = ℝ ou K = ℂ. Alors il existe une factorisation avec U une matrice unitaire m×m sur K, $\Sigma$ une matrice m×n dont les coefficients diagonaux sont des réels positifs ou nuls et tous les autres sont nuls, et $V^{*}$ est la matrice adjointe à V, matrice unitaire n×n sur K. On appelle cette factorisation la décomposition en valeurs singulières de 
+M. 
+ $M = U Σ V ∗ {\displaystyle M=U\Sigma V^{*}\,\!} M=U\Sigma V^{*}\,\!$
+{text-align: center}
+~
+~~
 
