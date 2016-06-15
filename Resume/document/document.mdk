@@ -18,8 +18,8 @@ X = np.array([
 ```
 __Probleme de cette représentation__: Matrice sparse + place en mémoire + Couteux de rajouter des mots
 
-__Solution__ : 
- 
+1. __Première Solution__ : 
+
 ~~ Framed
 ~ Theorem {caption:"Décomposition d'une matrice en valeurs singulières"}
 ____ \
@@ -29,4 +29,8 @@ M.
 {text-align: center}
 ~
 ~~
-
+On peut également interpréter cette décomposition dans l'esprit de l'étude statistique d'un ensemble de données. Alors, les principales colonnes de U représentent les tendances de l'ensemble d'étude (les vecteurs de U représentent les « directions de plus grande variation » de l'ensemble).
+~ Figure { #fig-monarch; caption: "Effet de la décomposition sur un ensemble de données, ici la largeur (W) et la hauteur (L) de visages humains. Les vecteurs U1 et U2 sont les deux premiers de la matrice U." }
+![495px-SVD_Graphic_Example.svg]
+[495px-SVD_Graphic_Example.svg]: images/495px-SVD_Graphic_Example.svg.png "495px-SVD_Graphic_Example.svg" { width:auto; max-width:90% }
+~
