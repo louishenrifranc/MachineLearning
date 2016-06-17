@@ -1,0 +1,56 @@
+# Natural Language Processing & Deep Learning
+1. Premier modèle
+Premier modèle de comprendre le sens d'un mot. En l'associant aux mots qui l'entoure d
+dans une phrase. On obtiendrait donc une matrice carré de vecteur. Exemple
+```python
+words = ["I","like","enjoy","deep","learning",
+         "NLP","flying","."]
+
+X = np.array([
+    [0,2,1,0,0,0,0,0],
+    [2,0,0,1,0,1,0,0],
+    [1,0,0,0,0,0,1,0],
+    [0,1,0,0,1,0,0,0],
+    [0,0,0,1,0,0,0,1],
+    [0,1,0,0,0,0,0,1]
+    ...
+])
+```
+__Probleme de cette représentation__: Matrice sparse + place en mémoire + Couteux de rajouter des mots
+
+ __Amélioration avec la SVD__ : 
+
+~~ Framed
+~ Theorem {caption:"Décomposition d'une matrice en valeurs singulières"}
+____ \
+Soit M une matrice m×n dont les coefficients appartiennent au corps K, où K = ℝ ou K = ℂ. Alors il existe une factorisation avec U une matrice unitaire m×m sur K, $\Sigma$ une matrice m×n dont les coefficients diagonaux sont des réels positifs ou nuls et tous les autres sont nuls, et $V^{*}$ est la matrice adjointe à V, matrice unitaire n×n sur K. On appelle cette factorisation la décomposition en valeurs singulières de 
+M. 
+ $M = U Σ V ∗ {\displaystyle M=U\Sigma V^{*}\,\!} M=U\Sigma V^{*}\,\!$
+{text-align: center}
+~
+~~
+On peut également interpréter cette décomposition dans l'esprit de l'étude statistique d'un ensemble de données. Alors, les principales colonnes de U représentent les tendances de l'ensemble d'étude (les vecteurs de U représentent les « directions de plus grande variation » de l'ensemble).
+~ Figure { #fig-monarch; caption: "Effet de la décomposition sur un ensemble de données, ici la largeur (W) et la hauteur (L) de visages humains. Les vecteurs U1 et U2 sont les deux premiers de la matrice U." }
+![495px-SVD_Graphic_Example.svg]
+[495px-SVD_Graphic_Example.svg]: images/495px-SVD_Graphic_Example.svg.png "495px-SVD_Graphic_Example.svg" { width:auto; max-width:90% }
+~
+* On peut majorer chaque valeur dans tous les vecteurs par une valeur pour éviter que des mots comme 
+"et","ou" influencent trop notre modèle
+
+__Amélioration avec word2vec__ \ 
+
+Fonction à maximiser est 
+$J(\Theta) =\frac{1}{T}\sum_{t=1}^{T}\sum_{j=-c}^{c} log(p(w_{t+j}|w_t))$
+où $T$ est la taille maximal de la fenêtre autour du mot. On itère sur toutes les tailles jsuqu'à la taille maximale
+, puis on itère sur tous les mots dans cette fenêtre, et on calcule la probabilité qu'on est ce mot.
+La probabilité p s'exprime quand à elle par 
+$p(w_{out},w_{in}) = \frac{exp(u_o^{\intercal} \cdot v_i)}{\sum_{w=1}{W}exp(u_w^{\intercal} \cdot v_i)}$
+On passe au log : 
+$log(p(w_{out},w_{in})) = log(\frac{exp(u_o^{\intercal} \cdot v_i)}{\sum_{w=1}{W}exp(u_w^{\intercal} \cdot v_i)})$
+$log(p(w_{out},w_{in})) = log(u_o^{\intercal} \cdot v_i) - log(\sum_{w=1}{W}exp(u_w^{\intercal} \cdot v_i))$
+$A = log(u_o^{\intercal} \cdot v_i)$
+$B = log(\sum_{w=1}{W}exp(u_w^{\intercal} \cdot v_i))$
+$\frac{\partial A}{\partial v_i} = u_o^{\intercal}$ car $\frac{\partial u_o^{\intercal} \cdot v_i}{\partial v_{i_j}} =  
+\frac{\partial \sum{j=0}{n} u_{o_j}^{\intercal} \cdot v_{i_j}}{\partial v_{i_j}}$ 
+et,
+$\frac{\partial B}{\partial v_i} = 
