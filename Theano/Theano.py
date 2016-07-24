@@ -45,37 +45,4 @@ print("First three labels\n", y_train[:3])
 y_train_one = np_utils.to_categorical(y_train)
 print('FIrst three labels after One Hot Encoder\n', y_train_one[:3])
 
-from keras.models import Sequential
-from keras.layers.core import Dense
-from keras.optimizers import SGD
-
-np.random.seed(1)
-
-model = Sequential()
-model.add(Dense(input_dim=X_train.shape[1],
-                output_dim=50,
-                init='uniform',
-                activation='tanh'
-                ))
-
-model.add(Dense(input_dim=50,
-                output_dim=50,
-                init='uniform',
-                activation='tanh'
-                ))
-
-model.add(Dense(input_dim=50,
-                output_dim=y_train_one.shape[1],
-                init='uniform',
-                activation='softmax'))
-
-sgd = SGD(lr=0.001, decay=1e-7, momentum=.9)
-model.compile(loss='categorical_crossentropy', optimizer=sgd)
-
-model.fit(X_train,
-          y_train_one,
-          nb_epoch=50,
-          batch_size=300,
-          verbose=1,
-          validation_split=0.1,
-          show_accuracy=True)
+from sklearn import
